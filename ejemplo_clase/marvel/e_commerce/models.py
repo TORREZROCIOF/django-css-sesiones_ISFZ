@@ -67,3 +67,13 @@ class WishList(models.Model):
 
     def __str__(self):
         return f'{self.id}'
+
+class Orden(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class DetalleOrden(models.Model):
+    orden = models.ForeignKey(Orden, on_delete=models.CASCADE, related_name='items')
+    comic = models.ForeignKey(Comic, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)  

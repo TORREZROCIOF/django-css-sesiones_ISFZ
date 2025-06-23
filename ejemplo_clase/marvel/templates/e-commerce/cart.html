@@ -7,46 +7,47 @@
 
 <table>
 
-    {% for comic in cart_items %}
-    <tr class="comic-item">
+    {% for item in cart_items %}
+    <tr>
         <td>
-            <a href="/e-commerce/detail?marvel_id={{comic.marvel_id}}">
-                <img src="{{comic.picture}}" alt="Not found">
+            <a href="/e-commerce/detail?marvel_id={{ item.comic_id.marvel_id }}">
+                <img src="{{ item.comic_id.picture }}" alt="{{ item.comic_id.title }}">
             </a>
         </td>
+        <td>{{ item.comic_id.title }}</td>
+        <td>Precio unitario: U$S {{ item.comic_id.price }}</td>
         <td>
-            <ul>
-                <li>
-                    <h2>{{comic.title}}</h2>
-                </li>
-                <li>
-                    <h2>Precio unitario: U$S {{comic.price}}</h2>
-                </li>
-            </ul>
+            <form method="post" action="{% url 'modificar_cantidad' item.id %}">
+                {% csrf_token %}
+                <label for="cantidad_{{ item.id }}">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad_{{ item.id }}" value="{{ item.wished_qty }}" min="1">
+                <button type="submit">Actualizar</button>
+            </form>
         </td>
         <td>
-            <form action="{% url 'checkbutton' %}" method="POST">{%csrf_token%}
-                <input type="hidden" name="username" value="{{user.username}}">
-                <input type="hidden" name="marvel_id" value="{{comic.marvel_id}}">
-                <input type="hidden" name="user_authenticated" value="{{user.is_authenticated}}">
+            <form action="{% url 'checkbutton' %}" method="POST">{% csrf_token %}
+                <input type="hidden" name="username" value="{{ user.username }}">
+                <input type="hidden" name="marvel_id" value="{{ item.comic_id.marvel_id }}">
+                <input type="hidden" name="user_authenticated" value="{{ user.is_authenticated }}">
                 <input type="hidden" name="type_button" value="cart">
                 <input type="hidden" name="actual_value" value="True">
-                <input type="hidden" name="path" value="cart">
                 <input type="hidden" name="path" value="{% url 'cart' %}">
                 <input type="image" src="{% static 'e-commerce/img/cart-true.png' %}" width="60%">
             </form>
-
             <p>(Quitar de carrito)</p>
         </td>
     </tr>
-
+    {% empty %}
+    <tr><td colspan="5">No hay comics en el carrito.</td></tr>
     {% endfor %}
+
+
 
     <td>
         <h1>Precio total: U$S {{total_price}}</h1>
     </td>
     <td style="text-align: center;">
-        <a  href="{% url 'thanks' %}">
+        <a  href="{% url 'confirmar_pedido' %}">
             <h1>-> Confirmar pedido <- </h1>
         </a>
     </td>

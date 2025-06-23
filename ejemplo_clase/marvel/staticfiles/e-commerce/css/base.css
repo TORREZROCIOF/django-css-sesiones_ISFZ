@@ -3,13 +3,13 @@
 
 /* Establecemos las variables globales:  */
 :root {
-    --main-bg-color: rgb(63, 63, 63);
-    --main-content-color: rgba(63, 63, 63, 0.568);
-    --font-color-white: rgb(207, 207, 207);
-    --font-color-red: rgb(255, 0, 0);
-    --font-color-yellow: rgb(255, 255, 0);
-    --link-color:rgb(34, 103, 251);
-    --font-color-tarea:rgb(16, 209, 16);
+    --main-bg-color: #f2f2f2;                
+    --main-content-color: #ffffffcc;         
+    --font-color-white: #333333;             
+    --font-color-red: #e63946;               
+    --font-color-yellow: #f4a261;            
+    --link-color: #0077cc;                  
+    --font-color-tarea: #2a9d8f;             
 }
 body{
     /* background-color: var(--main-bg-color); */
@@ -133,3 +133,5 @@ font-size: 20px;
 a[href*="inove"]{
     color:rgb(54, 190, 88);
 }
+
+

@@ -34,7 +34,9 @@ urlpatterns = [
     path('user', login_required(UserView.as_view()), name= 'user'),
     path('wish', login_required(WishView.as_view()), name='wish'),
     path('cart', login_required(CartView.as_view()), name='cart'),
-
+    path('cart/modificar/<int:item_id>/', modificar_cantidad, name='modificar_cantidad'),
+    path('confirmar-pedido/', confirmar_pedido, name='confirmar_pedido'),
+    
     # NOTE: Formularios ocultos
     path('checkbutton', check_button, name='checkbutton'),
 

@@ -38,6 +38,9 @@ Donde 92937874f377a1ea17f7637ee07208622e5cb5e6 es un ejemplo del Token Key.
 urlpatterns = [
     # Django default urls:
     path('admin/', admin.site.urls),
+    #cuentas
+    
+    path('cuenta/', include('cuentas.urls')), 
 
     # e-commerce app urls:
     path('e-commerce/',include('e_commerce.api.urls')),

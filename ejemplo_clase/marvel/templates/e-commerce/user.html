@@ -1,11 +1,36 @@
 {% extends "e-commerce/base.html" %}
 
-{% block title %}Datos de usuaio{% endblock %}
+{% block title %}Datos de usuario{% endblock %}
 
 {% block content %}
 <div class="tarea">
 
-    <h1>Tarea:</h1>
+    <hr>
+    <h2>📌 Información del usuario autenticado:</h2>
+
+    <ul>
+        <li><strong>Nombre:</strong> {{ user.first_name }}</li>
+        <li><strong>Apellido:</strong> {{ user.last_name }}</li>
+        <li><strong>Username:</strong> {{ user.username }}</li>
+        <li><strong>Email:</strong> {{ user.email }}</li>
+    </ul>
+
+    {% if user.perfilusuario %}
+    <h3>📌 Datos adicionales:</h3>
+    <ul>
+        <li><strong>País:</strong> {{ user.perfilusuario.pais }}</li>
+        <li><strong>Provincia:</strong> {{ user.perfilusuario.provincia }}</li>
+        <li><strong>Ciudad:</strong> {{ user.perfilusuario.ciudad }}</li>
+        <li><strong>Código Postal:</strong> {{ user.perfilusuario.codigo_postal }}</li>
+        <li><strong>Teléfono:</strong> {{ user.perfilusuario.telefono }}</li>
+    </ul>
+    {% else %}
+        <p><em>No hay datos adicionales disponibles.</em></p>
+    {% endif %}
+
+    <a href="{% url 'editar_perfil' %}">✏️ Editar perfil</a>
+
+    {% comment %} <h1>Tarea:</h1>
     <h2>1) Realizar la página de detalle de usuario</h2>
     <p>En esta página se debe reflejar toda la información perteneciente al usuario autenticado, así como ser:
     <ul>
@@ -55,7 +80,7 @@
 
     <h2>6) Modifique el estilo de la página</h2>
     Modifique el estilo de la página a gusto.
-    Puede utilizar el método de su preferencia, ya sea con CSS o con Bootstrap o similar.
+    Puede utilizar el método de su preferencia, ya sea con CSS o con Bootstrap o similar. {% endcomment %}
 
 </div>
 {% endblock %}

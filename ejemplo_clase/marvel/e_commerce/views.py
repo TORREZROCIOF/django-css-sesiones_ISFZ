@@ -286,3 +286,46 @@ class BootstrapSignupView(TemplateView):
     Vista para Template de registro de usuario con estilo de bootstrap.
     '''
     template_name = 'e-commerce/bootstrap-signup.html'
+
+
+
+def modificar_cantidad(request):
+    '''
+    Actualiza la cantidad deseada de un cómic en el carrito.
+    '''
+    user = request.user
+    marvel_id = request.POST.get('marvel_id')
+    nueva_cantidad = int(request.POST.get('cantidad', 1))
+
+    try:
+        comic = Comic.objects.get(marvel_id=marvel_id)
+        wish = WishList.objects.get(user_id=user, comic_id=comic)
+        wish.wished_qty = nueva_cantidad
+        wish.save()
+    except Comic.DoesNotExist:
+        pass
+    except WishList.DoesNotExist:
+        pass
+
+    return redirect('cart')
+
+
+def confirmar_pedido(request):
+    user = request.user
+    wish_items = WishList.objects.filter(user_id=user, cart=True, wished_qty__gt=0)
+    if not wish_items.exists():
+        return redirect('cart')
+    order = Order.objects.create(user=user, created_at=timezone.now())
+    for item in wish_items:
+        OrderItem.objects.create(
+            order=order,
+            comic=item.comic_id,
+            quantity=item.wished_qty,
+            price=item.comic_id.price
+        )
+        item.buied_qty += item.wished_qty
+        item.wished_qty = 0
+        item.cart = False
+        item.save()
+
+    return redirect('thanks')

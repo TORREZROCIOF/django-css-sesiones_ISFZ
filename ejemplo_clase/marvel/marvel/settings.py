@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # Third party apps: acá vamos agregando las aplicaciones de terceros, extensiones de Django.
     'rest_framework',
     'rest_framework.authtoken',
+    'cuentas',
 ]
 
 REST_FRAMEWORK = {
